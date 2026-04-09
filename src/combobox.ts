@@ -1,5 +1,6 @@
 import type { Page, Locator } from "playwright";
 import type { ComboboxIds } from "./types.ts";
+import { vahanDashboardUrl } from "./config.ts";
 
 export async function getAllCombobox(page: Page): Promise<ComboboxIds> {
   const comboboxIds = await page.locator("div[role='combobox']").all();
@@ -36,6 +37,89 @@ export async function getComboboxItemsIds(
   }
 
   return ids;
+}
+
+export async function selectCombobxItem(
+  page: Page,
+  comboboxId: string,
+  itemId: string,
+): Promise<string[] | void> {
+  const combobox = page.locator(`div[id=${comboboxId}]`);
+
+  const comboboxItemsListId = await getComboboxItemsListId(combobox);
+  const comboboxItemListLocater = page.locator(`ul[id=${comboboxItemsListId}]`);
+  if (await isItemSelected(comboboxItemListLocater, itemId)) {
+    return;
+  }
+
+  const comboboxItem = comboboxItemListLocater.locator(`li[id=${itemId}]`);
+
+  const responsePromise = page.waitForResponse(
+    (response) =>
+      response.url().includes(vahanDashboardUrl) &&
+      response.status() === 200 &&
+      response.request().method() === "POST",
+  );
+
+  await comboboxItem.evaluate((el: HTMLLIElement) => el.click());
+  await responsePromise;
+}
+
+export async function selectaxisVarComboboxItem(
+  page: Page,
+  comboboxId: string,
+) {
+  const combobox = page.locator(`div[id=${comboboxId}]`);
+
+  const comboboxItemsListId = await getComboboxItemsListId(combobox);
+  const comboboxItemListLocater = page.locator(`ul[id=${comboboxItemsListId}]`);
+  if (await isVarSelected(comboboxItemListLocater, comboboxId)) {
+    return;
+  }
+
+  const comboboxItem = comboboxItemListLocater.getByText(
+    comboboxId[0]!.toLowerCase() === "x" ? "Month Wise" : "Maker",
+    { exact: true },
+  );
+
+  const responsePromise = page.waitForResponse(
+    (response) =>
+      response.url().includes(vahanDashboardUrl) &&
+      response.status() === 200 &&
+      response.request().method() === "POST",
+  );
+
+  await comboboxItem.evaluate((el: HTMLLIElement) => el.click());
+  await responsePromise;
+}
+
+async function isItemSelected(
+  combobox: Locator,
+  itemId: string,
+): Promise<boolean> {
+  const ariaActiveDescendentId = await combobox.getAttribute(
+    "aria-activedescendant",
+  );
+  return ariaActiveDescendentId === itemId;
+}
+
+async function isVarSelected(
+  combobox: Locator,
+  comboboxId: string,
+): Promise<boolean> {
+  const ariaActiveDescendentId = await combobox.getAttribute(
+    "aria-activedescendant",
+  );
+
+  let itemId: string | null = null;
+  if (comboboxId[0]!.toLowerCase() === "y") {
+    const item = combobox.getByText("Maker", { exact: true });
+    itemId = await item.getAttribute("id");
+  } else {
+    const item = combobox.getByText("Month Wise", { exact: true });
+    itemId = await item.getAttribute("id");
+  }
+  return ariaActiveDescendentId === itemId;
 }
 
 async function getComboboxId(combobox: Locator): Promise<string> {
