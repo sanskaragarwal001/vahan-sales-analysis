@@ -13,5 +13,8 @@
   "packageManager": "pnpm@10.18.3",
   "dependencies": {
     "playwright": "^1.59.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2"
   }
 }
