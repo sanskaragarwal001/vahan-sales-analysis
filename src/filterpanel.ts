@@ -1,4 +1,5 @@
 import type { Page } from "playwright";
+import { join } from "path";
 import { vahanDashboardUrl } from "./config.ts";
 
 export async function openFilterLayoutPanel(page: Page) {
@@ -41,4 +42,21 @@ export async function fetchFilteredData(page: Page) {
   );
   await refreshButton.click();
   await responsePromise;
+}
+
+export async function downloadExcelData(page: Page) {
+  const downloadPromise = page.waitForEvent("download");
+  const downloadButton = page.locator('a[id="groupingTable:xls"]');
+
+  await downloadButton.click();
+  const download = await downloadPromise;
+
+  const filePath = join(
+    process.cwd(),
+    "downloads",
+    download.suggestedFilename(),
+  );
+
+  // Wait for the download process to complete and save the downloaded file somewhere.
+  await download.saveAs(filePath);
 }
