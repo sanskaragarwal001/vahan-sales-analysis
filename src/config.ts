@@ -4,7 +4,7 @@ export const vahanDashboardUrl =
   "https://vahan.parivahan.gov.in/vahan4dashboard/vahan/view/reportview.xhtml";
 
 export const browserLauchOptions: LaunchOptions = {
-  headless: false,
+  headless: true,
   slowMo: 200,
   args: [],
 };
