@@ -13,6 +13,7 @@ import {
   openFilterLayoutPanel,
   selectFilters,
 } from "./filterpanel.ts";
+import { convertExcelSalesRecordIntoJson } from "./excel.ts";
 
 export async function getSalesRecord(
   page: Page,
@@ -37,6 +38,7 @@ export async function getSalesRecord(
   await fetchFilteredData(page);
 
   await downloadExcelData(page);
+  await convertExcelSalesRecordIntoJson();
 }
 
 export async function getAllStates(page: Page): Promise<string[]> {

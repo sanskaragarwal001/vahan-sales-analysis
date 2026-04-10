@@ -12,7 +12,8 @@
   "license": "ISC",
   "packageManager": "pnpm@10.18.3",
   "dependencies": {
-    "playwright": "^1.59.1"
+    "playwright": "^1.59.1",
+    "read-excel-file": "^8.0.3"
   },
   "devDependencies": {
     "@types/node": "^25.5.2"
