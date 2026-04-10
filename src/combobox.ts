@@ -1,5 +1,5 @@
 import type { Page, Locator } from "playwright";
-import type { ComboboxIds } from "./types.ts";
+import type { ComboboxIds, Items } from "./types.ts";
 import { vahanDashboardUrl } from "./config.ts";
 
 export async function getAllCombobox(page: Page): Promise<ComboboxIds> {
@@ -23,17 +23,18 @@ export async function getAllCombobox(page: Page): Promise<ComboboxIds> {
 export async function getComboboxItemsIds(
   page: Page,
   combobxId: string,
-): Promise<string[]> {
+): Promise<Items[]> {
   const combobox = page.locator(`div[id=${combobxId}]`);
   const comboboxItemsListId = await getComboboxItemsListId(combobox);
   const itemsLocator = await page
     .locator(`ul[id=${comboboxItemsListId}] > li`)
     .all();
 
-  const ids: string[] = [];
+  const ids: Items[] = [];
   for (const locator of itemsLocator) {
     const id = await locator.getAttribute("id");
-    ids.push(id as string);
+    const text = await locator.innerText();
+    ids.push({ id: id as string, value: text });
   }
 
   return ids;

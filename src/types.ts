@@ -5,3 +5,8 @@ export interface ComboboxIds {
   xaxisComboboxId: string;
   selectedYearCombobxId: string;
 }
+
+export interface Items {
+  id: string;
+  value: string;
+}

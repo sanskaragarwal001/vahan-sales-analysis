@@ -14,6 +14,7 @@ import {
   selectFilters,
 } from "./filterpanel.ts";
 import { convertExcelSalesRecordIntoJson } from "./excel.ts";
+import type { Items } from "./types.ts";
 
 export async function getSalesRecord(
   page: Page,
@@ -41,7 +42,7 @@ export async function getSalesRecord(
   return await convertExcelSalesRecordIntoJson();
 }
 
-export async function getAllStates(page: Page): Promise<string[]> {
+export async function getAllStates(page: Page): Promise<Items[]> {
   const comboboxIds = await getAllCombobox(page);
 
   return await getComboboxItemsIds(page, comboboxIds.stateComboboxId);
@@ -50,7 +51,7 @@ export async function getAllStates(page: Page): Promise<string[]> {
 export async function getAllRtos(
   page: Page,
   stateId: string | undefined = undefined,
-): Promise<string[]> {
+): Promise<Items[]> {
   const comboboxIds = await getAllCombobox(page);
 
   if (typeof stateId === "string") {
