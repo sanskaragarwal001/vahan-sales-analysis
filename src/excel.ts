@@ -18,7 +18,7 @@ const months = [
 const schema = {
   sno: {
     column: "S No",
-    type: Number,
+    type: StringToNumber,
   },
   maker: {
     column: "Maker",
@@ -27,55 +27,55 @@ const schema = {
   },
   jan: {
     column: "JAN",
-    type: Number,
+    type: StringToNumber,
   },
   feb: {
     column: "FEB",
-    type: Number,
+    type: StringToNumber,
   },
   mar: {
     column: "MAR",
-    type: Number,
+    type: StringToNumber,
   },
   apr: {
     column: "APR",
-    type: Number,
+    type: StringToNumber,
   },
   may: {
     column: "MAY",
-    type: Number,
+    type: StringToNumber,
   },
   jun: {
     column: "JUN",
-    type: Number,
+    type: StringToNumber,
   },
   jul: {
     column: "JUL",
-    type: Number,
+    type: StringToNumber,
   },
   aug: {
     column: "AUG",
-    type: Number,
+    type: StringToNumber,
   },
   sep: {
     column: "SEP",
-    type: Number,
+    type: StringToNumber,
   },
   oct: {
     column: "OCT",
-    type: Number,
+    type: StringToNumber,
   },
   nov: {
     column: "NOV",
-    type: Number,
+    type: StringToNumber,
   },
   dec: {
     column: "DEC",
-    type: Number,
+    type: StringToNumber,
   },
   total: {
     column: "TOTAL",
-    type: Number,
+    type: StringToNumber,
   },
 };
 
@@ -114,4 +114,13 @@ export async function convertExcelSalesRecordIntoJson() {
   }
 
   return objects;
+}
+
+function StringToNumber(val: string) {
+  if (typeof val !== "string") return NaN;
+
+  val = val.replace(/,/g, "");
+
+  const toReturn = Number(val);
+  return toReturn;
 }
