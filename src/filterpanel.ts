@@ -1,4 +1,4 @@
-import type { Page } from "playwright";
+import type { Locator, Page } from "playwright";
 import { join } from "path";
 import { vahanDashboardUrl } from "./config.ts";
 
@@ -8,6 +8,17 @@ export async function openFilterLayoutPanel(page: Page) {
   const isOpen = await openButton.getAttribute("title");
   if (typeof isOpen === "string" && isOpen === "Open") {
     await openButton.click();
+  }
+}
+
+async function attemptSetChecked(locator: Locator) {
+  try {
+    // Check if the element is visible and enabled before attempting to check
+    await locator.waitFor({ state: "visible", timeout: 5000 });
+    await locator.check(); // Use check() or click() if setChecked() fails or is flaky
+  } catch (error) {
+    console.warn("Could not set check state for a filter, proceeding:", error);
+    throw error;
   }
 }
 
@@ -22,12 +33,12 @@ export async function selectFilters(
   const threeWheelerGoods = page.locator('label[for="VhClass:40"]');
 
   if (selectErickshawFilters) {
-    await erickshawWithCart.setChecked(true);
-    await erickshawWithPassanger.setChecked(true);
+    await attemptSetChecked(erickshawWithCart);
+    await attemptSetChecked(erickshawWithPassanger);
   }
   if (selectThreeWheelersFilter) {
-    await threeWheelerPassanger.setChecked(true);
-    await threeWheelerGoods.setChecked(true);
+    await attemptSetChecked(threeWheelerPassanger);
+    await attemptSetChecked(threeWheelerGoods);
   }
 }
 
