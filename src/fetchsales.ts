@@ -1,5 +1,5 @@
 import type { Page } from "playwright";
-import { vahanDashboardUrl } from "./config.ts";
+import { vahanDashboardUrl } from "./config";
 
 export async function fetchVahanSalesData(page: Page) {
   const refreshButton = page.locator("div[class=button-section] > button");

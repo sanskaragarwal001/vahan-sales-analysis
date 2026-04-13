@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 import type { Browser, Page } from "playwright";
 
-import { browserLauchOptions, newPageOptions } from "./config.ts";
+import { browserLauchOptions, newPageOptions } from "./config";
 
 export class BrowserManager {
   private static browser: Browser | null = null;

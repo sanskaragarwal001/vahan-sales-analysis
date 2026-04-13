@@ -1,6 +1,6 @@
 import type { Page, Locator } from "playwright";
-import type { ComboboxIds, Items } from "./types.ts";
-import { vahanDashboardUrl } from "./config.ts";
+import type { ComboboxIds, Items } from "./types";
+import { vahanDashboardUrl } from "./config";
 
 export async function getAllCombobox(page: Page): Promise<ComboboxIds> {
   const comboboxIds = await page.locator("div[role='combobox']").all();

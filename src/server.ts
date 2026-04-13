@@ -1,9 +1,9 @@
 import http, { IncomingMessage, ServerResponse } from "http";
 import { URL } from "url";
-import { BrowserManager } from "./browser.ts";
-import { getSalesRecord, getAllStates, getAllRtos } from "./index.ts";
-import { vahanDashboardUrl } from "./config.ts";
-import { getAllCombobox } from "./combobox.ts";
+import { BrowserManager } from "./browser";
+import { getSalesRecord, getAllStates, getAllRtos } from "./index";
+import { vahanDashboardUrl } from "./config";
+import { getAllCombobox } from "./combobox";
 import type { Page } from "playwright";
 
 // --- Types ---

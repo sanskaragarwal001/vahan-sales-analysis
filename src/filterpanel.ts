@@ -1,6 +1,6 @@
 import type { Locator, Page } from "playwright";
 import { join } from "path";
-import { vahanDashboardUrl } from "./config.ts";
+import { vahanDashboardUrl } from "./config";
 
 export async function openFilterLayoutPanel(page: Page) {
   const openButton = page.locator("div[id=filterLayout-toggler]");

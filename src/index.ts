@@ -1,19 +1,19 @@
 import type { Page } from "playwright";
-import { fetchVahanSalesData } from "./fetchsales.ts";
+import { fetchVahanSalesData } from "./fetchsales";
 
 import {
   getAllCombobox,
   getComboboxItemsIds,
   selectaxisVarComboboxItem,
   selectCombobxItem,
-} from "./combobox.ts";
+} from "./combobox";
 import {
   downloadExcelData,
   fetchFilteredData,
   openFilterLayoutPanel,
   selectFilters,
-} from "./filterpanel.ts";
-import { convertExcelSalesRecordIntoJson } from "./excel.ts";
+} from "./filterpanel";
+import { convertExcelSalesRecordIntoJson } from "./excel";
 import type { Items } from "./types.ts";
 
 export async function getSalesRecord(
