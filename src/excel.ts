@@ -1,5 +1,5 @@
 import { join } from "path";
-import { readSheet, parseData } from "read-excel-file/node";
+import { readSheet, parseData, Schema } from "read-excel-file/node";
 
 const months = [
   "JAN",
@@ -101,10 +101,11 @@ export async function convertExcelSalesRecordIntoJson() {
   }
 
   const expectedColumns = ["S No", "Maker", ...monthsToInclude, "TOTAL"];
+  // @ts-ignore
   data[0] = expectedColumns;
 
   const objects = [];
-  const results = parseData(data, schema);
+  const results = parseData(data, schema as Schema);
   for (const { errors: errorsInRow, object } of results) {
     if (errorsInRow) {
       console.error(errorsInRow);
