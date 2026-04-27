@@ -14,7 +14,7 @@ import {
   selectFilters,
 } from "./filterpanel";
 import { convertExcelSalesRecordIntoJson } from "./excel";
-import type { Items } from "./types.ts";
+import type { Items } from "./types";
 
 export async function getSalesRecord(
   page: Page,

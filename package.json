@@ -5,9 +5,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "dev:server": "node src/server.ts",
-    "production:server": "node build/server.js",
-    "build": "pnpm tsc"
+    "start": "tsx src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +17,6 @@
   },
   "devDependencies": {
     "@types/node": "^25.5.2",
-    "typescript": "^6.0.2"
+    "tsx": "^4.21.0"
   }
 }
